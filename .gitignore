@@ -7,8 +7,11 @@ __pycache__/
 *.pyo
 
 # film build outputs (render on CI, don't commit)
-stickman/film/
-stickman/film.mp4
+stickman/film/shots/
+stickman/film/*.mp4
+stickman/film/*.webm
+stickman/film/*.wav
+stickman/film/*.json
 *.mp4
 *.webm
 
