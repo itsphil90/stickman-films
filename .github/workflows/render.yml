@@ -25,40 +25,18 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Install Python deps
-        working-directory: stickman
+      - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install numpy scipy pillow playwright imageio-ffmpeg
-
-      - name: Setup Node (3D only)
-        if: inputs.style == '3D'
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install Chromium
-        working-directory: stickman
-        run: python -m playwright install --with-deps chromium
-
-      - name: Prepare film folder
-        working-directory: stickman
-        shell: bash
-        run: |
-          if [ -f film/film.js ]; then
-            echo "Using committed film/film.js"
-          elif [ "${{ inputs.style }}" = "3D" ]; then
-            python scripts/new_film.py film --3d
-          else
-            python scripts/new_film.py film
-          fi
+          pip install numpy scipy pillow playwright imageio-ffmpeg
+          playwright install-deps
+          playwright install chromium
 
       - name: Render film
-        working-directory: stickman
-        shell: bash
-        run: python scripts/build.py film --out my-film.mp4
+        run: |
+          cd stickman
+          python scripts/build.py film --out my-film.mp4
 
-      - name: Upload MP4
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: stickman-film-${{ inputs.style }}
