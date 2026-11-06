@@ -1,0 +1,18 @@
+# big uploads
+stickman.zip
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+
+# film build outputs (render on CI, don't commit)
+stickman/film/
+stickman/film.mp4
+*.mp4
+*.webm
+
+# temp / artifacts
+*.jpg
+!stickman/templates/*.jpg
+stickman/shots/
